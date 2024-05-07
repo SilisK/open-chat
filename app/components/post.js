@@ -7,7 +7,7 @@ export default function Post({ post }) {
       <header className="">
         <Author author={post.author} />
       </header>
-      <p className="text-center text-3xl">{post.text}</p>
+      <p className="text-center text-xl">{post.text}</p>
       {/*  */}
       <section className="grid gap-4">
         <div className="grid gap-4">

@@ -5,7 +5,7 @@ export default function Login() {
     <div className="grid place-items-center min-h-screen">
       <form className="banner p-8 grid bg-white rounded-xl md:border">
         <header className="text-center">
-          <h2 className="text-2xl font-semibold">Login to your account.</h2>
+          <h2 className="text-2xl font-semibold">Log in to your account.</h2>
         </header>
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Email</label>
