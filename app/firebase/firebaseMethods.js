@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 const auth = getAuth();
@@ -45,4 +46,12 @@ const logOut = async () => {
   }
 };
 
-export { auth, signUp, signIn, logOut };
+const changeUsername = async (username) => {
+  try {
+    return await updateProfile(auth.currentUser, { displayName: username });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { auth, signUp, signIn, logOut, changeUsername };
