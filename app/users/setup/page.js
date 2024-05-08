@@ -1,22 +1,40 @@
 "use client";
 
 import { auth, changeUsername } from "@/app/firebase/firebaseMethods";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserSetup() {
   const router = useRouter();
+  const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+        router.push("/login");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   return (
     <div className="grid place-items-center min-h-screen">
       <form
         className="banner p-8 bg-white rounded grid md:border"
         onSubmit={async (e) => {
           e.preventDefault();
-          await changeUsername(username);
-          router.push("/");
-          console.log(auth.currentUser.displayName);
+          if (username.length < 3) {
+            return;
+          }
+          try {
+            const func = await changeUsername(username);
+            router.push("/");
+          } catch (error) {
+            console.log(error.message);
+          }
         }}
       >
         <h2 className="text-2xl font-semibold text-center">
@@ -37,9 +55,6 @@ export default function UserSetup() {
           />
         </section>
         <div className="grid grid-flow-col gap-4 mx-4">
-          <Link href={"/"} className="grid h-max">
-            <button>Finish Later</button>
-          </Link>
           <button className="h-max">Submit</button>
         </div>
       </form>

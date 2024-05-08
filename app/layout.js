@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Open Chat | Start talking.",
   description: "Respond to any conversation.",
+  siteName: "Open Chat",
 };
 
 export default function RootLayout({ children }) {

@@ -40,6 +40,7 @@ export default function Author({ author, IsSelf }) {
         src={profile_icon}
         width={32}
         height={32}
+        alt="default user icon"
         className="rounded-full p-1 bg-zinc-200"
       />
       <div>{IsSelf ? "My Profile" : author}</div>

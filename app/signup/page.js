@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { signUp } from "../firebase/firebaseMethods";
+import { auth, signUp } from "../firebase/firebaseMethods";
 import MessageModal from "../components/messageModal";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 
 export default function Signup() {
   const router = useRouter();
@@ -34,8 +35,23 @@ export default function Signup() {
             });
             return;
           }
-          const func = await signUp(email, password);
-          router.push("/");
+          try {
+            const func = await signUp(email, password);
+            if (auth.currentUser.displayName) router.push("/");
+            else router.push("/users/setup");
+          } catch (error) {
+            let errorMessage;
+            switch (error.message) {
+              case "Firebase: Error (auth/email-already-in-use).":
+                errorMessage = `${email} is already being used, please try a different email.`;
+                break;
+            }
+            setMessageModal({
+              title: "Account Creation Failed",
+              message: errorMessage,
+              event: () => setMessageModal(),
+            });
+          }
         }}
       >
         <header className="text-center">

@@ -40,7 +40,7 @@ const signIn = async (email, password) => {
 // Sign out
 const logOut = async () => {
   try {
-    await signOut();
+    await signOut(auth);
   } catch (error) {
     throw error;
   }

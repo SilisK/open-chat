@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Author from "./components/author";
 import Post from "./components/post";
-import { auth } from "./firebase/firebaseMethods";
+import { auth, logOut } from "./firebase/firebaseMethods";
 import Link from "next/link";
 
 const posts = [
@@ -69,7 +69,7 @@ export default function HomePage() {
         setUser(null);
       }
     });
- 
+
     return () => unsubscribe();
   }, []);
   return (
@@ -83,8 +83,7 @@ export default function HomePage() {
           <Author author={posts[0].author} IsSelf />
         ) : (
           <p>
-            Join the conversation —{" "}
-            <Link href={"/login"}>Log In</Link>
+            Join the conversation — <Link href={"/login"}>Log In</Link>
           </p>
         )}
       </div>
