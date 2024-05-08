@@ -3,11 +3,11 @@ import Comment from "./comment";
 
 export default function Post({ post }) {
   return (
-    <div className="grid gap-16 bg-zinc-100 border-b-2 p-8">
+    <div className="grid gap-16 bg-zinc-100 border-b p-8">
       <header className="">
         <Author author={post.author} />
       </header>
-      <p className="text-center text-xl">{post.text}</p>
+      <p className="text-center">{post.text}</p>
       {/*  */}
       <section className="grid gap-4">
         <div className="grid gap-4">

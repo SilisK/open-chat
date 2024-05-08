@@ -30,7 +30,7 @@ button:active {
 
 a {
   color: rgb(0, 145, 255);
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
 .banner {

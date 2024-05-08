@@ -6,8 +6,18 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 
 const auth = getAuth();
+const db = getFirestore(app);
+
+// -- AUTHENTICATION --
 
 // Sign up
 const signUp = async (email, password) => {
@@ -54,4 +64,23 @@ const changeUsername = async (username) => {
   }
 };
 
-export { auth, signUp, signIn, logOut, changeUsername };
+// -- AUTHENTICATION --
+
+// -- DATABASE --
+
+const getCollection = async (collectionName) => {
+  try {
+    const snapshot = await getDocs(collection(db, collectionName));
+    const array = [];
+    snapshot.forEach((doc) => {
+      array.push({ id: doc.id });
+    });
+    return array;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// -- DATABASE --
+
+export { auth, db, signUp, signIn, logOut, changeUsername, getCollection };
