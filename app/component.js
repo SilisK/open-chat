@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Author from "./components/author";
 import Post from "./components/post";
-import { auth, logOut } from "./firebase/firebaseMethods";
+import { auth } from "./firebase/firebaseMethods";
 import Link from "next/link";
 
 const posts = [
