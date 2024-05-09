@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Author from "./components/author";
 import Post from "./components/post";
-import { auth, getCollection } from "./firebase/firebaseMethods";
+import { auth, getAllPosts, getAllUsers } from "./firebase/firebaseMethods";
 import Link from "next/link";
+import LoadingBlock from "./components/loadingBlock";
 
 const posts = [
   {
@@ -131,11 +132,14 @@ const posts = [
 ];
 
 export default function HomePage() {
+  const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
+  const [allUsers, setAllUsers] = useState();
+  const [allPosts, setAllPosts] = useState();
 
-  async function getAllUsers() {
+  async function getUsers() {
     try {
-      const users = await getCollection("users");
+      const users = await getAllUsers();
       console.log(users);
       return users;
     } catch (error) {
@@ -143,10 +147,13 @@ export default function HomePage() {
     }
   }
 
-  async function getAllPosts() {
+  async function getPosts() {
     try {
-      const userIds = await getAllUsers();
-      userIds.forEach((id) => {});
+      const posts = await getAllPosts();
+      console.log(posts);
+      setAllPosts(posts);
+      setInitializing(false);
+      return posts;
     } catch (error) {
       throw error;
     }
@@ -165,17 +172,36 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    getAllUsers();
+    setInitializing(true);
+    getUsers();
+    getPosts();
   }, []);
   return (
-    <main className="grid h-screen overflow-hidden lg:fixed lg:left-1/2 lg:-translate-x-1/2">
+    <main className="grid w-full border-x h-screen overflow-hidden lg:fixed lg:left-1/2 lg:-translate-x-1/2">
       <div className="overflow-y-scroll">
-        {posts.map((post) => (
-          <Post post={post} key={crypto.randomUUID()} />
-        ))}
+        {initializing ? (
+          <LoadingBlock />
+        ) : allPosts ? (
+          allPosts.map((post) => <Post post={post} key={crypto.randomUUID()} />)
+        ) : (
+          <div className="p-2 flex items-center h-full text-center">
+            <div className="w-full flex flex-col gap-4 items-center">
+              <p>No posts yet. Be the first.</p>
+              <form className="w-11/12 grid gap-4">
+                <input
+                  type="text"
+                  placeholder="Say something"
+                  className="bg-zinc-100"
+                  required
+                />
+                <button>Send</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
       {/* Profile */}
-      <div className="grid place-items-center bg-white border-x p-4">
+      <div className="fixed bottom-0 w-full grid place-items-center bg-white p-4">
         {user ? (
           <Author author={posts[0].author} IsSelf />
         ) : (

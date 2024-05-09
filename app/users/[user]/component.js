@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function UserPageComponent() {
   const params = useParams();
   return (
-    <main className="min-h-screen md:border-x">
+    <main className="border-x w-full h-screen overflow-hidden lg:fixed lg:left-1/2 lg:-translate-x-1/2">
       <header className="grid place-items-center py-16">
         <div className="flex flex-col gap-4 items-center">
           <Image

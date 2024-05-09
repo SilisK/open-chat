@@ -42,3 +42,16 @@ a {
 label {
   font-weight: 500;
 }
+
+@keyframes loading {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.loading {
+  animation: loading 0.8s linear infinite;
+}

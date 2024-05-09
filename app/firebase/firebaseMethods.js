@@ -10,6 +10,7 @@ import {
   getFirestore,
   collection,
   addDoc,
+  doc,
   getDoc,
   getDocs,
 } from "firebase/firestore";
@@ -68,19 +69,61 @@ const changeUsername = async (username) => {
 
 // -- DATABASE --
 
-const getCollection = async (collectionName) => {
+const getAllUsers = async () => {
   try {
-    const snapshot = await getDocs(collection(db, collectionName));
-    const array = [];
-    snapshot.forEach((doc) => {
-      array.push({ id: doc.id });
+    const users = [];
+
+    const usersSnapshot = await getDocs(collection(db, "users"));
+    usersSnapshot.forEach((doc) => {
+      var data = doc.data();
+      users.push({ id: doc.id, username: data.username });
     });
-    return array;
+
+    return users;
   } catch (error) {
     throw error;
   }
 };
 
+const getAllPosts = async () => {
+  try {
+    const posts = [];
+
+    const postsSnapshot = await getDocs(collection(db, "posts"));
+    postsSnapshot.forEach((doc) => {
+      var data = doc.data();
+      posts.push({
+        id: doc.id,
+        author: data.author,
+        authorId: data.authorId,
+        comments: data.comments,
+        likes: data.likes,
+        text: data.text,
+      });
+    });
+
+    return posts;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getAllComments = async (postId) => {
+  const ref = doc(db, "posts", postId);
+  const snapshot = await getDoc(ref);
+  return snapshot.data().comments;
+};
+
 // -- DATABASE --
 
-export { auth, db, signUp, signIn, logOut, changeUsername, getCollection };
+export {
+  auth,
+  db,
+  signUp,
+  signIn,
+  logOut,
+  changeUsername,
+  getAllUsers,
+  getAllPosts,
+  getAllComments,
+};
