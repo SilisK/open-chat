@@ -2,8 +2,9 @@
 
 import Author from "./author";
 import Comment from "./comment";
+import { auth } from "../firebase/firebaseMethods";
 
-export default function Post({ post }) {
+export default function Post({ post, setMessageModal }) {
   return (
     <div className="grid gap-16 bg-zinc-100 border-b p-8 pb-20">
       <header className="">
@@ -23,7 +24,20 @@ export default function Post({ post }) {
             </div>
           )}
         </div>
-        <form className="grid gap-4">
+        <form
+          className="grid gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (auth.currentUser == null) {
+              setMessageModal({
+                title: "Unable to comment",
+                message: "You be must logged in to post comments.",
+                event: () => setMessageModal(),
+              });
+              return;
+            }
+          }}
+        >
           <input
             type="text"
             placeholder="Respond"

@@ -139,6 +139,25 @@ const getAllPosts = async () => {
   }
 };
 
+const getIdByUsername = async (username) => {
+  try {
+    const usernameSnapshot = await getDoc(doc(db, "usernames", username));
+    const id = usernameSnapshot.data().id;
+    return id;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const verifyAuthByUsername = async (username) => {
+  try {
+    const id = await getIdByUsername(username);
+    return auth.currentUser.uid === id;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // -- DATABASE --
 
 export {
@@ -153,4 +172,6 @@ export {
   doesUsernameExist,
   createNewUser,
   getUser,
+  getIdByUsername,
+  verifyAuthByUsername,
 };
