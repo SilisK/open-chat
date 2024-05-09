@@ -9,10 +9,10 @@ import {
 import {
   getFirestore,
   collection,
-  addDoc,
   doc,
   getDoc,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 
 const auth = getAuth();
@@ -69,6 +69,37 @@ const changeUsername = async (username) => {
 
 // -- DATABASE --
 
+const doesUsernameExist = async (query) => {
+  const usernameSnapshot = await getDoc(doc(db, "usernames", query));
+  return usernameSnapshot.exists();
+};
+
+const createNewUser = async (newUserData) => {
+  try {
+    await setDoc(doc(db, "usernames", newUserData.username), {
+      id: auth.currentUser.uid,
+    });
+    await setDoc(doc(db, "users", auth.currentUser.uid), {
+      ...newUserData,
+      created: Date(),
+    });
+    return newUserData;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUser = async (username) => {
+  try {
+    const usernameSnapshot = await getDoc(doc(db, "usernames", username));
+    const id = usernameSnapshot.data().id;
+    const userSnapshot = await getDoc(doc(db, "users", id));
+    return userSnapshot;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getAllUsers = async () => {
   try {
     const users = [];
@@ -108,12 +139,6 @@ const getAllPosts = async () => {
   }
 };
 
-const getAllComments = async (postId) => {
-  const ref = doc(db, "posts", postId);
-  const snapshot = await getDoc(ref);
-  return snapshot.data().comments;
-};
-
 // -- DATABASE --
 
 export {
@@ -125,5 +150,7 @@ export {
   changeUsername,
   getAllUsers,
   getAllPosts,
-  getAllComments,
+  doesUsernameExist,
+  createNewUser,
+  getUser,
 };

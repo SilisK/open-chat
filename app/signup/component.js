@@ -5,16 +5,20 @@ import { useState } from "react";
 import { auth, signUp } from "../firebase/firebaseMethods";
 import MessageModal from "../components/messageModal";
 import { useRouter } from "next/navigation";
+import LoadingBlock from "../components/loadingBlock";
+import Image from "next/image";
+import openchat_logo from "../assets/icons/OpenChat-Logo.png";
+import Logo from "../components/logo";
 
 export default function Component() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
-  const [processing, setProcessing] = useState(false);
   const [messageModal, setMessageModal] = useState();
+  const [loading, setLoading] = useState(false);
   return (
-    <div className="grid place-items-center min-h-screen">
+    <main className="select-none grid place-items-center min-h-screen">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -23,7 +27,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-8 grid bg-white rounded-xl md:border"
+        className="banner p-8 grid bg-white rounded-xl md:shadow-xl md:border"
         onSubmit={async (e) => {
           e.preventDefault();
           if (password != verifyPassword) {
@@ -34,8 +38,9 @@ export default function Component() {
             });
             return;
           }
+          setLoading(true);
           try {
-            const func = await signUp(email, password);
+            await signUp(email, password);
             if (auth.currentUser.displayName) router.push("/");
             else router.push("/users/setup");
           } catch (error) {
@@ -50,11 +55,13 @@ export default function Component() {
               message: errorMessage,
               event: () => setMessageModal(),
             });
+            setLoading(false);
           }
         }}
       >
-        <header className="text-center">
-          <h2 className="text-2xl font-semibold">Sign up for OpenChat.</h2>
+        <header className="flex justify-center items-center gap-2 text-center pointer-events-none">
+          <h2 className="text-2xl font-semibold">Sign up | </h2>
+          <Logo size={"small"} />
         </header>
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Email</label>
@@ -85,18 +92,24 @@ export default function Component() {
             onChange={(e) => setVerifyPassword(e.target.value)}
           />
         </section>
-        <section className="grid p-4">
-          <button>Submit</button>
-        </section>
-        <section className="grid place-items-center grid-flow-col">
-          <div className="flex gap-2">
-            Already have an account?
-            <span>
-              <Link href={"login"}>Log In</Link>
-            </span>
-          </div>
-        </section>
+        {loading ? (
+          <LoadingBlock />
+        ) : (
+          <>
+            <section className="grid p-4">
+              <button>Submit</button>
+            </section>
+            <section className="grid place-items-center grid-flow-col">
+              <div className="flex gap-2">
+                Already have an account?
+                <span>
+                  <Link href={"login"}>Log In</Link>
+                </span>
+              </div>
+            </section>
+          </>
+        )}
       </form>
-    </div>
+    </main>
   );
 }

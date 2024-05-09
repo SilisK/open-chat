@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Author from "./components/author";
 import Post from "./components/post";
-import { auth, getAllPosts, getAllUsers } from "./firebase/firebaseMethods";
+import {
+  auth,
+  getAllPosts,
+  getAllUsers,
+  logOut,
+} from "./firebase/firebaseMethods";
 import Link from "next/link";
 import LoadingBlock from "./components/loadingBlock";
 
@@ -140,7 +145,6 @@ export default function HomePage() {
   async function getUsers() {
     try {
       const users = await getAllUsers();
-      console.log(users);
       return users;
     } catch (error) {
       throw error;
@@ -150,7 +154,6 @@ export default function HomePage() {
   async function getPosts() {
     try {
       const posts = await getAllPosts();
-      console.log(posts);
       setAllPosts(posts);
       setInitializing(false);
       return posts;
