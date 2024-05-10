@@ -45,6 +45,15 @@ a {
   width: 100%;
 }
 
+.comments-list {
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+input[type=checkbox]{
+  width: max-content;
+}
+
 label {
   font-weight: 500;
 }

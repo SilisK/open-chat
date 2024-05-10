@@ -23,15 +23,15 @@ import comment_icon from "../../assets/icons/comment.png";
 function CreatePostElement({ isMyProfile }) {
   if (isMyProfile) {
     return (
-      <section className="flex flex-col items-center gap-4 p-8 bg-zinc-100/50">
+      <section className="flex flex-col items-center gap-4 p-8">
         <h2 className="text-xl font-semibold text-left w-full">Create</h2>
         <form className="w-11/12 grid gap-4">
-          <input
+          <textarea
             type="text"
             placeholder="Say something"
-            className="bg-zinc-100"
+            className="p-2 rounded-xl resize-none bg-zinc-100 dark:text-black"
             required
-          />
+          ></textarea>
           <button>Post</button>
         </form>
       </section>
@@ -92,7 +92,7 @@ export default function UserPageComponent() {
     checkAuth();
   }, []);
   return (
-    <main className="select-none relative border-x min-h-screen overflow-hidden">
+    <main className="select-none relative min-h-screen overflow-hidden md:border-x dark:text-white">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -101,8 +101,11 @@ export default function UserPageComponent() {
         />
       ) : null}
       <header className="grid place-items-center pt-16">
-        <Link href={"/"} className="absolute top-10 left-10">
-          <Image src={back_icon} width={32} height={32} unoptimized />
+        <Link
+          href={"/"}
+          className="absolute top-10 left-10 text-4xl text-black dark:text-white"
+        >
+          <p>{"<"}</p>
         </Link>
         {isMyProfile ? (
           <p
@@ -137,7 +140,7 @@ export default function UserPageComponent() {
           <div className="flex justify-between p-8 w-full text-center">
             {parseInt(joinDate) ? <p>Joined {joinDate}</p> : null}
             <div
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-1 cursor-pointer p-2 rounded-xl dark:bg-zinc-500"
               onClick={() => {
                 navigator.clipboard.writeText(window.location);
                 setMessageModal({
@@ -147,31 +150,33 @@ export default function UserPageComponent() {
                 });
               }}
             >
-              <Image src={share_icon} width={24} height={24} unoptimized />{" "}
+              <Image src={share_icon} width={20} height={20} unoptimized />{" "}
               <p>Share</p>
             </div>
           </div>
         </div>
       </header>
-      <section className="grid gap-4 p-8 bg-zinc-100/50">
+      <section className="grid gap-4 p-8">
         <h2 className="text-xl font-semibold">Posts</h2>
         <div>
           {loading ? (
             <LoadingBlock />
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div className="p-8 grid gap-8 text-center" key={post.id}>
-                <p>{post.text}</p>
-                <div className="grid grid-flow-col justify-evenly">
-                  <div className="w-max flex items-center gap-1">
-                    <Image src={like_icon} width={32} height={32} unoptimized />
+              <div className="p-8 grid gap-4 text-center" key={post.id}>
+                <p className="bg-white p-4 rounded-3xl shadow dark:bg-zinc-500">
+                  {post.text}
+                </p>
+                <div className="font-semibold grid grid-flow-col justify-start gap-4">
+                  <div className="w-max flex items-center gap-1 p-2 rounded-full dark:bg-zinc-500">
+                    <Image src={like_icon} width={20} height={20} unoptimized />
                     <p>{post.likes}</p>
                   </div>
-                  <div className="w-max flex items-center gap-1">
+                  <div className="w-max flex items-center gap-1 p-2 rounded-full dark:bg-zinc-500">
                     <Image
                       src={comment_icon}
-                      width={32}
-                      height={32}
+                      width={20}
+                      height={20}
                       unoptimized
                     />
                     <p>{post.comments.length}</p>

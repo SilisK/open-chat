@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Post from "./components/post";
-import { auth, getAllPosts, getAllUsers } from "./firebase/firebaseMethods";
+import { auth, getAllPosts } from "./firebase/firebaseMethods";
 import LoadingBlock from "./components/loadingBlock";
 import MessageModal from "./components/messageModal";
 import Navbar from "./components/navbar";
@@ -41,7 +41,7 @@ export default function HomePage() {
     getPosts();
   }, []);
   return (
-    <main className="relative grid border-x h-screen overflow-hidden select-none">
+    <main className="relative grid h-screen overflow-hidden select-none md:border-x dark:border-zinc-500">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}

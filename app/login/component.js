@@ -24,7 +24,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-2 grid gap-8 bg-white rounded-xl md:p-8 md:shadow-xl md:border"
+        className="banner p-2 grid gap-8 bg-white md:rounded-xl md:p-8 md:shadow-xl md:border dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           setLoading(true);
@@ -46,12 +46,15 @@ export default function Component() {
         }}
       >
         <header className="text-center flex items-center justify-center gap-2">
-          <h2 className="text-2xl font-semibold pointer-events-none">Log in |</h2>
+          <h2 className="text-2xl font-semibold pointer-events-none">
+            Log in |
+          </h2>
           <Logo />
         </header>
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Email</label>
           <input
+            className="dark:text-black"
             type="email"
             placeholder="Enter your email"
             required
@@ -61,6 +64,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Password</label>
           <input
+            className="dark:text-black"
             type="password"
             placeholder="Enter your password"
             required

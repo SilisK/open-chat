@@ -34,7 +34,7 @@ export default function Author({ author, IsSelf }) {
   return (
     <Link
       href={`/users/${IsSelf ? endpoint() : author}`}
-      className="grid text-black text-sm place-items-center grid-flow-col gap-2 w-max cursor-pointer"
+      className="grid text-black text-sm place-items-center grid-flow-col gap-2 w-max cursor-pointer dark:text-white"
     >
       <Image
         src={profile_icon}

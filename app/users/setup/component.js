@@ -40,7 +40,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-8 bg-white rounded grid md:shadow-xl md:border"
+        className="banner p-8 bg-white rounded grid md:shadow-xl md:border dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           if (username.length < 3) {
@@ -75,6 +75,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Display Name</label>
           <input
+            className="dark:text-black"
             type="text"
             placeholder="What should we call you?"
             required
@@ -90,7 +91,10 @@ export default function Component() {
             <p className="text-sm">- Needs at least 3 characters</p>
             <p className="text-sm">- Contains only letters</p>
           </div>
-          <p>This will be your unique OpenChat handle <b>(ex. @hiresiliskleemoff)</b></p>
+          <p>
+            This will be your unique OpenChat handle{" "}
+            <b>(ex. @hiresiliskleemoff)</b>
+          </p>
         </section>
         {loading ? (
           <LoadingBlock />

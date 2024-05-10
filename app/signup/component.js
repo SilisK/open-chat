@@ -6,8 +6,6 @@ import { auth, signUp } from "../firebase/firebaseMethods";
 import MessageModal from "../components/messageModal";
 import { useRouter } from "next/navigation";
 import LoadingBlock from "../components/loadingBlock";
-import Image from "next/image";
-import openchat_logo from "../assets/icons/OpenChat-Logo.png";
 import Logo from "../components/logo";
 
 export default function Component() {
@@ -18,7 +16,7 @@ export default function Component() {
   const [messageModal, setMessageModal] = useState();
   const [loading, setLoading] = useState(false);
   return (
-    <main className="select-none grid place-items-center min-h-screen">
+    <main className="select-none grid place-items-center min-h-screen py-16">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -27,7 +25,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-2 grid gap-8 bg-white rounded-xl md:p-8 md:shadow-xl md:border"
+        className="banner p-2 grid bg-white md:rounded-xl md:p-8 md:shadow-xl md:border dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           if (password != verifyPassword) {
@@ -60,12 +58,15 @@ export default function Component() {
         }}
       >
         <header className="flex justify-center items-center gap-2 text-center">
-          <h2 className="text-2xl font-semibold pointer-events-none">Sign up | </h2>
+          <h2 className="text-2xl font-semibold pointer-events-none">
+            Sign up |{" "}
+          </h2>
           <Logo size={"small"} />
         </header>
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Email</label>
           <input
+            className="dark:text-black"
             type="email"
             placeholder="Enter your email"
             required
@@ -75,6 +76,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Password</label>
           <input
+            className="dark:text-black"
             type="password"
             placeholder="Enter your password"
             required
@@ -85,12 +87,21 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Confirm Password</label>
           <input
+            className="dark:text-black"
             type="password"
             placeholder="Re-type your password"
             required
             minLength={6}
             onChange={(e) => setVerifyPassword(e.target.value)}
           />
+        </section>
+        <section className="h-max p-4">
+          <div className="flex items-center gap-1 justify-center">
+            <input type="checkbox" required />
+            <p className="text-center">
+              I agree to the <Link href={"/terms"}>terms</Link> of OpenChat.
+            </p>
+          </div>
         </section>
         {loading ? (
           <LoadingBlock />
