@@ -1,18 +1,23 @@
 "use client";
 
-import Author from "./author";
 import Comment from "./comment";
 import { auth } from "../firebase/firebaseMethods";
+import Link from "next/link";
 
 export default function Post({ post, setMessageModal }) {
   return (
-    <div className="grid gap-16 bg-zinc-100 border-b p-8 pb-20">
-      <header className="">
-        <Author author={post.author} />
+    <div className="grid bg-zinc-100 pb-16 text-sm">
+      <header className="flex flex-col items-center justify-center pt-8">
+        <b className="w-full px-8">
+          Convo by <Link href={`/users/${post.author}`} className="font-normal">@{post.author}</Link>
+        </b>
+        <div className="w-11/12 flex gap-1 items-center justify-center py-8 rounded-3xl">
+          <p className="bg-white p-4 rounded-3xl shadow">{post.text}</p>
+        </div>
       </header>
-      <p className="text-center">{post.text}</p>
       {/*  */}
-      <section className="grid gap-4">
+      <section className="p-8 grid gap-4">
+        <b>Comments</b>
         <div className="grid gap-4">
           {post.comments ? (
             post.comments.map((comment) => (
@@ -31,7 +36,7 @@ export default function Post({ post, setMessageModal }) {
             if (auth.currentUser == null) {
               setMessageModal({
                 title: "Unable to comment",
-                message: "You be must logged in to post comments.",
+                message: "You must be logged in to post comments.",
                 event: () => setMessageModal(),
               });
               return;

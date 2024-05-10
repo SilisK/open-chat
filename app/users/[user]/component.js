@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import profile_icon from "../../assets/icons/profile.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import {
   getAllPosts,
   getIdByUsername,
   getUser,
+  logOut,
   verifyAuthByUsername,
 } from "@/app/firebase/firebaseMethods";
 import LoadingBlock from "@/app/components/loadingBlock";
@@ -16,6 +17,8 @@ import back_icon from "../../assets/icons/back.png";
 import Link from "next/link";
 import share_icon from "../../assets/icons/share.png";
 import MessageModal from "@/app/components/messageModal";
+import like_icon from "../../assets/icons/like.png";
+import comment_icon from "../../assets/icons/comment.png";
 
 function CreatePostElement({ isMyProfile }) {
   if (isMyProfile) {
@@ -39,6 +42,7 @@ function CreatePostElement({ isMyProfile }) {
 
 export default function UserPageComponent() {
   const params = useParams();
+  const router = useRouter();
   const [user, setUser] = useState();
   const [joinDate, setJoinDate] = useState();
   const [posts, setPosts] = useState();
@@ -55,6 +59,7 @@ export default function UserPageComponent() {
       const year = joinDateObject.getFullYear();
       setJoinDate(year);
     } catch (error) {
+      router.push("/404");
       throw error;
     }
   }
@@ -102,7 +107,20 @@ export default function UserPageComponent() {
         {isMyProfile ? (
           <p
             className="absolute top-10 right-10 cursor-pointer"
-            onClick={() => {}}
+            onClick={async () => {
+              try {
+                await logOut();
+                router.push("/login");
+              } catch (error) {
+                setMessageModal({
+                  title: "Unable to log out",
+                  message:
+                    "Something went wrong when processing your request, please try again later.",
+                  event: () => setMessageModal(),
+                });
+                throw error;
+              }
+            }}
           >
             Log Out
           </p>
@@ -144,6 +162,21 @@ export default function UserPageComponent() {
             posts.map((post) => (
               <div className="p-8 grid gap-8 text-center" key={post.id}>
                 <p>{post.text}</p>
+                <div className="grid grid-flow-col justify-evenly">
+                  <div className="w-max flex items-center gap-1">
+                    <Image src={like_icon} width={32} height={32} unoptimized />
+                    <p>{post.likes}</p>
+                  </div>
+                  <div className="w-max flex items-center gap-1">
+                    <Image
+                      src={comment_icon}
+                      width={32}
+                      height={32}
+                      unoptimized
+                    />
+                    <p>{post.comments.length}</p>
+                  </div>
+                </div>
                 <button>View Post</button>
               </div>
             ))

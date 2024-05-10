@@ -152,7 +152,9 @@ const getIdByUsername = async (username) => {
 const verifyAuthByUsername = async (username) => {
   try {
     const id = await getIdByUsername(username);
-    return auth.currentUser.uid === id;
+    await auth.authStateReady();
+    if (auth.currentUser) return auth.currentUser.uid === id;
+    else return false;
   } catch (error) {
     throw error;
   }

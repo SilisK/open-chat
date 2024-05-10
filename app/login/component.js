@@ -24,7 +24,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-8 grid bg-white rounded-xl md:shadow-xl md:border"
+        className="banner p-2 grid gap-8 bg-white rounded-xl md:p-8 md:shadow-xl md:border"
         onSubmit={async (e) => {
           e.preventDefault();
           setLoading(true);
@@ -45,8 +45,8 @@ export default function Component() {
           }
         }}
       >
-        <header className="text-center flex items-center justify-center gap-2 pointer-events-none">
-          <h2 className="text-2xl font-semibold">Log in |</h2>
+        <header className="text-center flex items-center justify-center gap-2">
+          <h2 className="text-2xl font-semibold pointer-events-none">Log in |</h2>
           <Logo />
         </header>
         <section className="grid h-max gap-4 p-4">

@@ -1,36 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Author from "./components/author";
 import Post from "./components/post";
-import {
-  auth,
-  getAllPosts,
-  getAllUsers,
-  logOut,
-} from "./firebase/firebaseMethods";
-import Link from "next/link";
+import { auth, getAllPosts, getAllUsers } from "./firebase/firebaseMethods";
 import LoadingBlock from "./components/loadingBlock";
 import MessageModal from "./components/messageModal";
+import Navbar from "./components/navbar";
 
 export default function HomePage() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
-  const [allUsers, setAllUsers] = useState();
   const [allPosts, setAllPosts] = useState();
   const [messageModal, setMessageModal] = useState();
 
-  async function getUsers() {
-    try {
-      const users = await getAllUsers();
-      return users;
-    } catch (error) {
-      throw error;
-    }
-  }
-
   async function getPosts() {
     try {
+      setInitializing(true);
       const posts = await getAllPosts();
       setAllPosts(posts);
       setInitializing(false);
@@ -53,12 +38,10 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    setInitializing(true);
-    getUsers();
     getPosts();
   }, []);
   return (
-    <main className="grid border-x h-screen overflow-hidden">
+    <main className="relative grid border-x h-screen overflow-hidden select-none">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -94,16 +77,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
-      {/* Profile */}
-      <div className="w-full grid place-items-center bg-white p-4">
-        {user ? (
-          <Author IsSelf />
-        ) : (
-          <p>
-            Join the conversation — <Link href={"/login"}>Log In</Link>
-          </p>
-        )}
-      </div>
+      <Navbar user={user} />
     </main>
   );
 }

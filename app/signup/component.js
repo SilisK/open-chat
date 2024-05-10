@@ -27,7 +27,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-8 grid bg-white rounded-xl md:shadow-xl md:border"
+        className="banner p-2 grid gap-8 bg-white rounded-xl md:p-8 md:shadow-xl md:border"
         onSubmit={async (e) => {
           e.preventDefault();
           if (password != verifyPassword) {
@@ -59,8 +59,8 @@ export default function Component() {
           }
         }}
       >
-        <header className="flex justify-center items-center gap-2 text-center pointer-events-none">
-          <h2 className="text-2xl font-semibold">Sign up | </h2>
+        <header className="flex justify-center items-center gap-2 text-center">
+          <h2 className="text-2xl font-semibold pointer-events-none">Sign up | </h2>
           <Logo size={"small"} />
         </header>
         <section className="grid h-max gap-4 p-4">
