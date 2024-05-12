@@ -149,12 +149,32 @@ const getIdByUsername = async (username) => {
   }
 };
 
+const doesUserHaveUsername = async (id) => {
+  try {
+    const usersSnapshot = await getDoc(doc(db, "users", id));
+    const user = usersSnapshot.data();
+    if (user) return true;
+    return false;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const verifyAuthByUsername = async (username) => {
   try {
     const id = await getIdByUsername(username);
     await auth.authStateReady();
     if (auth.currentUser) return auth.currentUser.uid === id;
     else return false;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getPost = async (id) => {
+  try {
+    const post = await getDoc(doc(db, "posts", id));
+    return post.data();
   } catch (error) {
     throw error;
   }
@@ -176,4 +196,6 @@ export {
   getUser,
   getIdByUsername,
   verifyAuthByUsername,
+  getPost,
+  doesUserHaveUsername,
 };

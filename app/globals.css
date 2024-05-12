@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
+main,
+nav {
   max-width: 720px;
   margin: auto;
 }
@@ -40,8 +41,8 @@ a {
 }
 
 .banner1 {
-  max-width: 640px;
-  min-height: 420px;
+  max-width: 540px;
+  min-height: 200px;
   width: 100%;
 }
 
@@ -50,7 +51,7 @@ a {
   overflow-y: auto;
 }
 
-input[type=checkbox]{
+input[type="checkbox"] {
   width: max-content;
 }
 
@@ -69,4 +70,12 @@ label {
 
 .loading {
   animation: loading 0.8s linear infinite;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
 }

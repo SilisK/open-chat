@@ -4,7 +4,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Open Chat | Start talking.",
+  title: "OpenChat | Start Talking.",
   description: "Respond to any conversation.",
   siteName: "Open Chat",
 };

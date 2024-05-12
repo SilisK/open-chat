@@ -18,6 +18,7 @@ export default function Component() {
   const [username, setUsername] = useState("");
   const [messageModal, setMessageModal] = useState();
   const [loading, setLoading] = useState(false);
+  const [inputCount, setInputCount] = useState(0);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -31,7 +32,7 @@ export default function Component() {
     return () => unsubscribe();
   }, []);
   return (
-    <div className="grid place-items-center min-h-screen">
+    <div className="grid place-items-center min-h-screen select-none">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -68,33 +69,35 @@ export default function Component() {
           }
         }}
       >
-        <header className="flex justify-center items-center gap-2 text-center pointer-events-none">
+        <header className="flex justify-center items-center gap-2 text-center">
           <h2 className="text-2xl font-semibold">Pick a username | </h2>
           <Logo size={"small"} />
         </header>
         <section className="grid h-max gap-4 p-4">
           <label className="px-4">Display Name</label>
-          <input
-            className="dark:text-black"
-            type="text"
-            placeholder="What should we call you?"
-            required
-            onChange={(e) => {
-              let val = e.target.value;
-              val = val.replace(/[^a-zA-Z]/g, "");
-              e.target.value = val.trim().toLowerCase();
-              setUsername(e.target.value);
-            }}
-          />
-          <div className="py-8">
-            <b>Rules</b>
-            <p className="text-sm">- Needs at least 3 characters</p>
-            <p className="text-sm">- Contains only letters</p>
+          <div className="flex items-center gap-4">
+            <input
+              className="w-full dark:text-black"
+              type="text"
+              placeholder="What should we call you?"
+              required
+              maxLength={30}
+              onChange={(e) => {
+                let val = e.target.value;
+                val = val.replace(/[^a-zA-Z]/g, "");
+                e.target.value = val.trim().toLowerCase();
+                setInputCount(e.target.value.length);
+                setUsername(e.target.value);
+              }}
+            />
+            <p
+              className={`${
+                inputCount < 3 ? "text-zinc-500/50 dark:text-white/50" : "text-green-500"
+              }`}
+            >
+              {inputCount}/30
+            </p>
           </div>
-          <p>
-            This will be your unique OpenChat handle{" "}
-            <b>(ex. @hiresiliskleemoff)</b>
-          </p>
         </section>
         {loading ? (
           <LoadingBlock />

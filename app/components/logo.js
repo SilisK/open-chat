@@ -7,14 +7,26 @@ export default function Logo({ size }) {
     case "small":
       return (
         <Link href={"/"} className="flex items-center justify-center gap-1">
-          <Image src={openchat_logo} width={36} height={36} unoptimized />
+          <Image
+            src={openchat_logo}
+            width={36}
+            height={36}
+            unoptimized
+            className="pointer-events-none"
+          />
           <p className="text-sm">OpenChat™</p>
         </Link>
       );
     default:
       return (
         <Link href={"/"} className="flex items-center justify-center gap-1">
-          <Image src={openchat_logo} width={36} height={36} unoptimized />
+          <Image
+            src={openchat_logo}
+            width={36}
+            height={36}
+            unoptimized
+            className="pointer-events-none"
+          />
           <p className="text-sm">OpenChat™</p>
         </Link>
       );

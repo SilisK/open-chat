@@ -21,17 +21,32 @@ import like_icon from "../../assets/icons/like.png";
 import comment_icon from "../../assets/icons/comment.png";
 
 function CreatePostElement({ isMyProfile }) {
+  const [inputCount, setInputCount] = useState(0);
   if (isMyProfile) {
     return (
       <section className="flex flex-col items-center gap-4 p-8">
         <h2 className="text-xl font-semibold text-left w-full">Create</h2>
-        <form className="w-11/12 grid gap-4">
-          <textarea
-            type="text"
-            placeholder="Say something"
-            className="p-2 rounded-xl resize-none bg-zinc-100 dark:text-black"
-            required
-          ></textarea>
+        <form
+          className="w-11/12 grid gap-4"
+          onSubmit={async (e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className="flex gap-2">
+            <textarea
+              type="text"
+              maxLength={280}
+              placeholder="Say something"
+              className="w-full p-2 rounded-xl resize-none bg-zinc-100 dark:text-black"
+              required
+              onChange={(e) => {
+                setInputCount(e.target.value.length);
+              }}
+            ></textarea>
+            <p className={`flex items-end text-xs ${inputCount < 1 ? "opacity-20" : ""}`}>
+              {inputCount}/280
+            </p>
+          </div>
           <button>Post</button>
         </form>
       </section>
@@ -92,7 +107,7 @@ export default function UserPageComponent() {
     checkAuth();
   }, []);
   return (
-    <main className="select-none relative min-h-screen overflow-hidden md:border-x dark:text-white">
+    <main className="select-none relative min-h-screen overflow-hidden md:border-x dark:text-white dark:border-zinc-500">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -163,26 +178,14 @@ export default function UserPageComponent() {
             <LoadingBlock />
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div className="p-8 grid gap-4 text-center" key={post.id}>
+              <div className="grid gap-4 text-center md:p-8" key={post.id}>
+                <b className="flex justify-end">💬 {post.comments.length}</b>
                 <p className="bg-white p-4 rounded-3xl shadow dark:bg-zinc-500">
                   {post.text}
                 </p>
-                <div className="font-semibold grid grid-flow-col justify-start gap-4">
-                  <div className="w-max flex items-center gap-1 p-2 rounded-full dark:bg-zinc-500">
-                    <Image src={like_icon} width={20} height={20} unoptimized />
-                    <p>{post.likes}</p>
-                  </div>
-                  <div className="w-max flex items-center gap-1 p-2 rounded-full dark:bg-zinc-500">
-                    <Image
-                      src={comment_icon}
-                      width={20}
-                      height={20}
-                      unoptimized
-                    />
-                    <p>{post.comments.length}</p>
-                  </div>
-                </div>
-                <button>View Post</button>
+                <Link href={`/posts/${post.id}`} className="grid">
+                  <button>View Post</button>
+                </Link>
               </div>
             ))
           ) : (

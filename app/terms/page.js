@@ -3,7 +3,7 @@ import Logo from "../components/logo";
 
 export default function Terms() {
   return (
-    <main className="min-h-screen p-4 md:border-x dark:text-white">
+    <main className="min-h-screen p-4 md:border-x dark:text-white dark:border-zinc-500">
       <header className="grid grid-flow-col gap-4 place-items-center py-8 border-b mb-4">
         <div className="flex gap-1">
           <h1 className="text-xl font-semibold">

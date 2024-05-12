@@ -41,7 +41,7 @@ export default function HomePage() {
     getPosts();
   }, []);
   return (
-    <main className="relative grid h-screen overflow-hidden select-none md:border-x dark:border-zinc-500">
+    <main className="relative grid min-h-screen select-none dark:border-zinc-500">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}

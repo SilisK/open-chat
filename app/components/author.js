@@ -43,7 +43,7 @@ export default function Author({ author, IsSelf }) {
         alt="default user icon"
         className="p-1 bg-white rounded-full bg-zinc-200"
       />
-      {IsSelf ? null : <p>{author}</p>}
+      {IsSelf ? <p className="text-zinc-500">Profile</p> : <p>{author}</p>}
     </Link>
   );
 }
