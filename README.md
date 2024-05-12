@@ -89,7 +89,6 @@
         </a>
         (Senior Software Engineering Manager)
     </li>
-        <iframe src=https://giphy.com/embed/3o7qDK5J5Uerg3atJ6 width=240 height=165></iframe>
     <li>
         <a href=https://github.com/mikeboyle>
             Mike Boyle
