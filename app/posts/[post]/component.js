@@ -8,7 +8,7 @@ import { auth, getPost } from "@/app/firebase/firebaseMethods";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function PostComponent({ post }) {
+function PostComponent({ post, postId }) {
   const [messageModal, setMessageModal] = useState();
   return (
     <div>
@@ -19,7 +19,7 @@ function PostComponent({ post }) {
           event={messageModal.event}
         />
       ) : null}
-      <Post post={post} IsPage setMessageModal={setMessageModal} />
+      <Post post={{...post, id: postId}} IsPage setMessageModal={setMessageModal} />
       <Navbar user={auth.currentUser} />
     </div>
   );
@@ -45,7 +45,7 @@ export default function Component() {
   }, []);
   return (
     <main className="relative grid h-screen overflow-hidden select-none dark:border-zinc-500 dark:text-white">
-      {loading ? <LoadingBlock /> : <PostComponent post={post} />}
+      {loading ? <LoadingBlock /> : <PostComponent post={post} postId={params.post}/>}
     </main>
   );
 }

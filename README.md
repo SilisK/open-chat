@@ -65,6 +65,19 @@
     </li>
 </ul>
 <h2>
+    Note
+</h2>
+<div>
+    <p>
+        For this project, I'm using a file called <code>environment.js</code> in the root folder for the environment variables. You'll need to include this file for your project to run the app or use a custom method.
+    </p>
+    <img src="./environment-variables.jpeg">
+    <p>
+        The <code>environment.js</code> file gets imported into the next.js config so the project can access its environment variables. You can add any other environment variables you need by following the same conventions in <code>environment.js</code>.
+    </p>
+    <img src="./next-config.png">
+</div>
+<h2>
     Shoutouts
 </h2>
 <p>

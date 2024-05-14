@@ -13,6 +13,10 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  addDoc,
+  arrayUnion,
+  updateDoc,
+  FieldPath,
 } from "firebase/firestore";
 
 const auth = getAuth();
@@ -153,7 +157,7 @@ const doesUserHaveUsername = async (id) => {
   try {
     const usersSnapshot = await getDoc(doc(db, "users", id));
     const user = usersSnapshot.data();
-    if (user) return true;
+    if (user) return user;
     return false;
   } catch (error) {
     throw error;
@@ -180,6 +184,27 @@ const getPost = async (id) => {
   }
 };
 
+const createPost = async (postData) => {
+  try {
+    const post = await addDoc(collection(db, "posts"), postData);
+    return postData;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createComment = async (postId, commentData) => {
+  try {
+    const ref = doc(db, "posts", postId);
+    const comment = await updateDoc(ref, {
+      comments: arrayUnion(commentData),
+    });
+    return comment;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // -- DATABASE --
 
 export {
@@ -198,4 +223,6 @@ export {
   verifyAuthByUsername,
   getPost,
   doesUserHaveUsername,
+  createPost,
+  createComment,
 };

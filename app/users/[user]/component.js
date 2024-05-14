@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   auth,
+  createPost,
   getAllPosts,
   getIdByUsername,
   getUser,
@@ -13,15 +14,14 @@ import {
   verifyAuthByUsername,
 } from "@/app/firebase/firebaseMethods";
 import LoadingBlock from "@/app/components/loadingBlock";
-import back_icon from "../../assets/icons/back.png";
 import Link from "next/link";
 import share_icon from "../../assets/icons/share.png";
 import MessageModal from "@/app/components/messageModal";
-import like_icon from "../../assets/icons/like.png";
-import comment_icon from "../../assets/icons/comment.png";
 
-function CreatePostElement({ isMyProfile }) {
+function CreatePostElement({ userData, isMyProfile, router }) {
+  const [loading, setLoading] = useState(false);
   const [inputCount, setInputCount] = useState(0);
+  const [inputText, setInputText] = useState();
   if (isMyProfile) {
     return (
       <section className="flex flex-col items-center gap-4 p-8">
@@ -30,6 +30,23 @@ function CreatePostElement({ isMyProfile }) {
           className="w-11/12 grid gap-4"
           onSubmit={async (e) => {
             e.preventDefault();
+            if (loading) return;
+            setLoading(true);
+            const postData = {
+              author: userData.username,
+              authorId: userData.id,
+              comments: [],
+              likes: 0,
+              text: inputText,
+              timestamp: new Date(),
+            };
+            try {
+              const newPost = await createPost(postData);
+              // Refresh the page after successfully uploading a new post
+              window.location.reload();
+            } catch (error) {
+              setLoading(false);
+            }
           }}
         >
           <div className="flex gap-2">
@@ -41,13 +58,18 @@ function CreatePostElement({ isMyProfile }) {
               required
               onChange={(e) => {
                 setInputCount(e.target.value.length);
+                setInputText(e.target.value);
               }}
             ></textarea>
-            <p className={`flex items-end text-xs ${inputCount < 1 ? "opacity-20" : ""}`}>
-              {inputCount}/280
-            </p>
           </div>
-          <button>Post</button>
+          <p
+            className={`flex justify-end text-xs ${
+              inputCount < 1 ? "opacity-20" : ""
+            }`}
+          >
+            {inputCount}/280
+          </p>
+          {loading ? <LoadingBlock /> : <button>Post</button>}
         </form>
       </section>
     );
@@ -107,7 +129,7 @@ export default function UserPageComponent() {
     checkAuth();
   }, []);
   return (
-    <main className="select-none relative min-h-screen overflow-hidden md:border-x dark:text-white dark:border-zinc-500">
+    <main className="select-none relative h-screen overflow-hidden md:border-x dark:text-white dark:border-zinc-500">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -171,14 +193,14 @@ export default function UserPageComponent() {
           </div>
         </div>
       </header>
-      <section className="grid gap-4 p-8">
+      <section className="grid gap-4 px-8">
         <h2 className="text-xl font-semibold">Posts</h2>
-        <div>
+        <div className="posts-layout grid gap-2 items-start">
           {loading ? (
             <LoadingBlock />
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div className="grid gap-4 text-center md:p-8" key={post.id}>
+              <div className="grid gap-4 text-center md:px-8" key={post.id}>
                 <b className="flex justify-end">💬 {post.comments.length}</b>
                 <p className="bg-white p-4 rounded-3xl shadow dark:bg-zinc-500">
                   {post.text}
@@ -193,7 +215,13 @@ export default function UserPageComponent() {
           )}
         </div>
       </section>
-      <CreatePostElement isMyProfile={isMyProfile} />
+      {auth.currentUser ? (
+        <CreatePostElement
+          userData={{ username: params.user, id: auth.currentUser.uid }}
+          isMyProfile={isMyProfile}
+          router={router}
+        />
+      ) : null}
     </main>
   );
 }

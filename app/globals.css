@@ -8,10 +8,20 @@ nav {
   margin: auto;
 }
 
+::-webkit-scrollbar {
+  width: 0;
+}
+
 input {
   background-color: whitesmoke;
   border-radius: 24px;
   padding: 16px;
+}
+
+.posts-layout {
+  height: 225px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 button {

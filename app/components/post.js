@@ -1,14 +1,24 @@
 "use client";
 
 import Comment from "./comment";
-import { auth, doesUserHaveUsername } from "../firebase/firebaseMethods";
+import {
+  auth,
+  createComment,
+  doesUserHaveUsername,
+} from "../firebase/firebaseMethods";
 import Link from "next/link";
 import Logo from "./logo";
 import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import LoadingBlock from "./loadingBlock";
 
 export default function Post({ post, setMessageModal, IsPage }) {
+  const router = useRouter();
+  const params = useParams();
   const [latestCommentsFirst, setLatestComments] = useState([]);
   const [inputCount, setInputCount] = useState(0);
+  const [inputText, setInputText] = useState();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const arr = [...post.comments];
     arr.reverse();
@@ -76,16 +86,38 @@ export default function Post({ post, setMessageModal, IsPage }) {
               return;
             }
 
-            const hasUsername = await doesUserHaveUsername(
-              auth.currentUser.uid
-            );
-            if (!hasUsername) {
+            const user = await doesUserHaveUsername(auth.currentUser.uid);
+            if (!user) {
               setMessageModal({
                 title: "Unable to comment",
                 message: "You must choose a username to post comments.",
                 event: () => setMessageModal(),
               });
               return;
+            }
+
+            if (loading) return;
+            setLoading(true);
+            try {
+              // TRY TO UPDATE FIELD ON POST
+              const tryComment = await createComment(post.id, {
+                author: user.username,
+                authorId: auth.currentUser.uid,
+                text: inputText,
+                timestamp: new Date(),
+              });
+              if (window.location.pathname.includes(params.post)) {
+                window.location.reload();
+              } else {
+                router.push(`/posts/${post.id}`);
+              }
+            } catch (error) {
+              setMessageModal({
+                title: "Unable to comment",
+                message: "Something went wrong, please try again later.",
+                event: () => setMessageModal(),
+              });
+              setLoading(false);
             }
           }}
         >
@@ -98,13 +130,14 @@ export default function Post({ post, setMessageModal, IsPage }) {
               required
               onChange={(e) => {
                 setInputCount(e.target.value.length);
+                setInputText(e.target.value);
               }}
             />
             <p className={`text-xs ${inputCount < 1 ? "opacity-20" : ""}`}>
               {inputCount}/280
             </p>
           </div>
-          <button>Send</button>
+          {loading ? <LoadingBlock /> : <button>Send</button>}
         </form>
       </section>
     </div>
