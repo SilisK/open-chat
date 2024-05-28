@@ -26,16 +26,16 @@ export default function Post({ post, setMessageModal, IsPage }) {
   }, []);
   return (
     <div
-      className={`grid bg-zinc-100 pb-16 text-sm ${
+      className={`grid gap-8 bg-zinc-100 pt-8 pb-16 text-sm ${
         IsPage ? "h-full" : ""
       } dark:bg-zinc-800 dark:text-white`}
     >
       {IsPage ? (
-        <div className="grid place-items-center">
+        <div className="grid place-items-center h-max pt-8">
           <Logo />
         </div>
       ) : null}
-      <header className="flex flex-col items-center justify-center pt-8">
+      <header className="flex flex-col items-center justify-center">
         <b className={`${IsPage ? "" : "w-full px-8"}`}>
           Convo by{" "}
           <Link
@@ -45,14 +45,14 @@ export default function Post({ post, setMessageModal, IsPage }) {
             @{post.author}
           </Link>
         </b>
-        <div className="w-11/12 flex gap-1 items-center justify-center py-8 rounded-3xl">
+        <div className="w-11/12 h-full flex gap-1 items-center justify-center py-8 rounded-3xl">
           <p className="bg-white p-4 rounded-3xl shadow dark:bg-zinc-500">
             {post.text}
           </p>
         </div>
       </header>
       {/*  */}
-      <section className={`p-8 grid gap-4 ${IsPage ? "h-max" : ""}`}>
+      <section className={`p-8 grid gap-4 ${IsPage ? "h-full" : ""}`}>
         <b>Comments ({post.comments.length})</b>
         <div className="comments-list grid gap-3">
           {post.comments.length > 0 ? (
@@ -121,7 +121,7 @@ export default function Post({ post, setMessageModal, IsPage }) {
             }
           }}
         >
-          <div className="flex items-center gap-2">
+          <div className="h-max flex items-center gap-2">
             <input
               type="text"
               maxLength={280}

@@ -44,7 +44,7 @@ export default function Component() {
     findPost();
   }, []);
   return (
-    <main className="relative grid h-screen overflow-hidden select-none dark:border-zinc-500 dark:text-white">
+    <main className="relative grid min-h-screen overflow-hidden select-none dark:border-zinc-500 dark:text-white">
       {loading ? <LoadingBlock /> : <PostComponent post={post} postId={params.post}/>}
     </main>
   );
