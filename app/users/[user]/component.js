@@ -24,8 +24,8 @@ function CreatePostElement({ userData, isMyProfile, router }) {
   const [inputText, setInputText] = useState();
   if (isMyProfile) {
     return (
-      <section className="flex flex-col items-center gap-4 p-8">
-        <h2 className="text-xl font-semibold text-left w-full">Create</h2>
+      <section className="flex flex-col gap-4 items-center gap-4 py-8 px-8">
+        <h2 className="text-xl text-left w-full">Create a post</h2>
         <form
           className="w-11/12 grid gap-4"
           onSubmit={async (e) => {
@@ -54,7 +54,7 @@ function CreatePostElement({ userData, isMyProfile, router }) {
               type="text"
               maxLength={280}
               placeholder="Say something"
-              className="w-full p-2 rounded-xl resize-none bg-zinc-100 dark:text-black"
+              className="w-full p-4 rounded-3xl resize-none dark:text-black"
               required
               onChange={(e) => {
                 setInputCount(e.target.value.length);
@@ -129,7 +129,7 @@ export default function UserPageComponent() {
     checkAuth();
   }, []);
   return (
-    <main className="select-none relative h-screen overflow-hidden md:border-x dark:text-white dark:border-zinc-500">
+    <main className="text-sm select-none relative min-h-screen overflow-hidden md:text-base md:border-x dark:text-white dark:border-zinc-500">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -187,15 +187,21 @@ export default function UserPageComponent() {
                 });
               }}
             >
-              <Image src={share_icon} width={20} height={20} unoptimized />{" "}
+              <Image
+                src={share_icon}
+                width={20}
+                height={20}
+                alt="share icon"
+                unoptimized
+              />{" "}
               <p>Share</p>
             </div>
           </div>
         </div>
       </header>
       <section className="grid gap-4 px-8">
-        <h2 className="text-xl font-semibold">Posts</h2>
-        <div className="posts-layout grid gap-2 items-start">
+        <h2 className="text-xl">Posts</h2>
+        <div className="posts-layout grid gap-8 items-start">
           {loading ? (
             <LoadingBlock />
           ) : posts.length > 0 ? (
