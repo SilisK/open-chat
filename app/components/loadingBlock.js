@@ -9,6 +9,7 @@ export default function LoadingBlock() {
         width={76}
         height={76}
         unoptimized
+        alt="loading icon"
         className="loading"
       />
     </div>

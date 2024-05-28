@@ -12,6 +12,7 @@ export default function Logo({ size }) {
             width={36}
             height={36}
             unoptimized
+            alt="logo"
             className="pointer-events-none"
           />
           <p className="text-sm">OpenChat™</p>
@@ -25,6 +26,7 @@ export default function Logo({ size }) {
             width={36}
             height={36}
             unoptimized
+            alt="logo"
             className="pointer-events-none"
           />
           <p className="text-sm">OpenChat™</p>
