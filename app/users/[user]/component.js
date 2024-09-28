@@ -129,7 +129,7 @@ export default function UserPageComponent() {
     checkAuth();
   }, []);
   return (
-    <main className="text-sm select-none relative min-h-screen overflow-hidden md:text-base md:border-x dark:text-white dark:border-zinc-500">
+    <main className="text-sm select-none relative min-h-screen overflow-hidden md:text-base dark:text-white">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -206,9 +206,9 @@ export default function UserPageComponent() {
             <LoadingBlock />
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div className="grid gap-4 text-center md:px-8" key={post.id}>
+              <div className="grid gap-2 text-center md:px-8" key={post.id}>
                 <b className="flex justify-end">💬 {post.comments.length}</b>
-                <p className="bg-white p-4 rounded-3xl shadow dark:bg-zinc-500">
+                <p className="bg-white p-4 rounded-md shadow dark:bg-zinc-500">
                   {post.text}
                 </p>
                 <Link href={`/posts/${post.id}`} className="grid">

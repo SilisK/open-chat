@@ -25,7 +25,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-2 grid bg-white md:rounded-xl md:p-8 md:shadow-xl md:border dark:bg-zinc-900 dark:text-white"
+        className="banner p-2 grid bg-white md:rounded-xl md:p-8 dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           if (password != verifyPassword) {
@@ -64,7 +64,7 @@ export default function Component() {
           <Logo size={"small"} />
         </header>
         <section className="grid h-max gap-4 p-4">
-          <label className="px-4">Email</label>
+          <label>Email</label>
           <input
             className="dark:text-black"
             type="email"
@@ -74,7 +74,7 @@ export default function Component() {
           />
         </section>
         <section className="grid h-max gap-4 p-4">
-          <label className="px-4">Password</label>
+          <label className="">Password</label>
           <input
             className="dark:text-black"
             type="password"
@@ -85,7 +85,7 @@ export default function Component() {
           />
         </section>
         <section className="grid h-max gap-4 p-4">
-          <label className="px-4">Confirm Password</label>
+          <label className="">Confirm Password</label>
           <input
             className="dark:text-black"
             type="password"

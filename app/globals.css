@@ -14,7 +14,7 @@ nav {
 
 input {
   background-color: whitesmoke;
-  border-radius: 24px;
+  border-radius: 6px;
   padding: 16px;
 }
 
@@ -27,7 +27,7 @@ input {
 button {
   background-color: rgb(113, 113, 113);
   color: white;
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 8px;
 }
 
@@ -83,9 +83,9 @@ label {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
-  select,
+  /* select,
   textarea,
   input {
     font-size: 16px;
-  }
+  } */
 }

@@ -28,7 +28,7 @@ export default function Post({ post, setMessageModal, IsPage }) {
 	return (
 		<div
 			className={`grid gap-8 bg-zinc-100 pt-8 pb-16 text-sm ${
-				IsPage ? "h-full" : "border mb-4 rounded-xl"
+				IsPage ? "h-full" : "md:mb-4 md:rounded-xl"
 			} dark:bg-zinc-800 dark:text-white`}
 		>
 			{IsPage && (
@@ -54,20 +54,20 @@ export default function Post({ post, setMessageModal, IsPage }) {
 				</div>
 			</header>
 			{/*  */}
-			<section className={`p-8 grid gap-4 ${IsPage ? "h-full" : ""}`}>
+			<section className={`p-2 md:p-8 grid gap-4 ${IsPage ? "h-full" : ""}`}>
 				<b>Comments ({post.comments.length})</b>
 				<div className="comments-list grid gap-3">
 					{post.comments.length > 0 ? (
 						<>
-							{post.comments.length > 1 ? (
+							{post.comments.length > 1 && (
 								<p className="text-right px-4">Latest</p>
-							) : null}
+							)}
 							{latestCommentsFirst.map((comment) => (
 								<Comment comment={comment} key={crypto.randomUUID()} />
 							))}
-							{post.comments.length > 1 ? (
+							{post.comments.length > 1 && (
 								<p className="text-right px-4">Oldest</p>
-							) : null}
+							)}
 						</>
 					) : (
 						<div className="text-sm text-center text-zinc-400">
@@ -76,7 +76,7 @@ export default function Post({ post, setMessageModal, IsPage }) {
 					)}
 				</div>
 				<form
-					className="grid gap-4"
+					className="grid gap-2"
 					onSubmit={async (e) => {
 						e.preventDefault();
 						if (auth.currentUser == null) {
@@ -123,19 +123,23 @@ export default function Post({ post, setMessageModal, IsPage }) {
 						}
 					}}
 				>
-					<div className="h-max flex items-center gap-2">
+					<div className="rounded-lg relative w-full bg-white dark:bg-neutral-300/10 h-max flex items-center gap-2">
 						<input
 							type="text"
 							maxLength={280}
 							placeholder="Respond"
-							className="w-full bg-white dark:bg-neutral-300/10"
+							className="w-full bg-white/0 mr-16"
 							required
 							onChange={(e) => {
 								setInputCount(e.target.value.length);
 								setInputText(e.target.value);
 							}}
 						/>
-						<p className={`text-xs ${inputCount < 1 ? "opacity-20" : ""}`}>
+						<p
+							className={`bg-zinc-100/50 p-2 backdrop-blur rounded-full absolute right-2 text-xs ${
+								inputCount < 1 ? "opacity-20" : ""
+							}`}
+						>
 							{inputCount}/280
 						</p>
 					</div>
