@@ -128,7 +128,7 @@ export default function Post({ post, setMessageModal, IsPage }) {
 							type="text"
 							maxLength={280}
 							placeholder="Respond"
-							className="w-full bg-white/0 mr-16"
+							className="p-3 w-full bg-white/0 mr-16"
 							required
 							onChange={(e) => {
 								setInputCount(e.target.value.length);

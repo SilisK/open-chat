@@ -15,7 +15,7 @@ nav {
 input {
   background-color: whitesmoke;
   border-radius: 6px;
-  padding: 16px;
+  /* padding: 16px; */
 }
 
 .posts-layout {
@@ -61,10 +61,6 @@ a {
   overflow-y: auto;
 }
 
-input[type="checkbox"] {
-  width: max-content;
-}
-
 label {
   font-weight: 500;
 }
@@ -83,9 +79,9 @@ label {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
-  /* select,
+  select,
   textarea,
-  input {
+  input[type=text], input[type=password] {
     font-size: 16px;
-  } */
+  }
 }

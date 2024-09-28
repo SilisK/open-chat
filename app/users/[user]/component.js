@@ -27,7 +27,7 @@ function CreatePostElement({ userData, isMyProfile, router }) {
       <section className="flex flex-col gap-4 items-center gap-4 py-8 px-8">
         <h2 className="text-xl text-left w-full">Create a post</h2>
         <form
-          className="w-11/12 grid gap-4"
+          className="w-full grid gap-4"
           onSubmit={async (e) => {
             e.preventDefault();
             if (loading) return;
@@ -54,7 +54,7 @@ function CreatePostElement({ userData, isMyProfile, router }) {
               type="text"
               maxLength={280}
               placeholder="Say something"
-              className="w-full p-4 rounded-3xl resize-none dark:text-black"
+              className="w-full p-4 rounded-md resize-none dark:text-black"
               required
               onChange={(e) => {
                 setInputCount(e.target.value.length);
@@ -206,7 +206,7 @@ export default function UserPageComponent() {
             <LoadingBlock />
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div className="grid gap-2 text-center md:px-8" key={post.id}>
+              <div className="grid gap-2 text-center" key={post.id}>
                 <b className="flex justify-end">💬 {post.comments.length}</b>
                 <p className="bg-white p-4 rounded-md shadow dark:bg-zinc-500">
                   {post.text}

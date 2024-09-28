@@ -6,7 +6,7 @@ export default function Terms() {
     <main className="min-h-screen p-4 dark:text-white dark:border-zinc-500">
       <header className="grid grid-flow-col gap-4 place-items-center py-8 mb-4 dark:border-zinc-500">
         <div className="flex gap-1">
-          <h1 className="text-xl font-bold md:text-3xl">
+          <h1 className="text-xl md:text-3xl">
             {terms.termsOfService.title} <span className="font-normal">|</span>
           </h1>
           <Logo />

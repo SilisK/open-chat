@@ -16,7 +16,7 @@ export default function Component() {
   const [messageModal, setMessageModal] = useState();
   const [loading, setLoading] = useState(false);
   return (
-    <main className="select-none grid place-items-center min-h-screen py-16">
+    <main className="select-none grid place-items-center py-16">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -25,7 +25,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-2 grid bg-white md:rounded-xl md:p-8 dark:bg-zinc-900 dark:text-white"
+        className="max-w-xl w-full p-2 grid bg-white md:rounded-xl md:p-8 dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           if (password != verifyPassword) {
@@ -58,7 +58,7 @@ export default function Component() {
         }}
       >
         <header className="flex justify-center items-center gap-2 text-center">
-          <h2 className="text-2xl font-semibold pointer-events-none">
+          <h2 className="text-2xl pointer-events-none">
             Sign up |{" "}
           </h2>
           <Logo size={"small"} />
@@ -66,7 +66,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label>Email</label>
           <input
-            className="dark:text-black"
+            className="p-2 dark:text-black"
             type="email"
             placeholder="Enter your email"
             required
@@ -76,7 +76,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="">Password</label>
           <input
-            className="dark:text-black"
+            className="p-2 dark:text-black"
             type="password"
             placeholder="Enter your password"
             required
@@ -87,7 +87,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="">Confirm Password</label>
           <input
-            className="dark:text-black"
+            className="p-2 dark:text-black"
             type="password"
             placeholder="Re-type your password"
             required

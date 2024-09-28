@@ -15,7 +15,7 @@ export default function Component() {
   const [messageModal, setMessageModal] = useState();
   const [loading, setLoading] = useState(false);
   return (
-    <div className="select-none grid place-items-center min-h-screen">
+    <div className="select-none grid place-items-center py-16">
       {messageModal ? (
         <MessageModal
           title={messageModal.title}
@@ -24,7 +24,7 @@ export default function Component() {
         />
       ) : null}
       <form
-        className="banner p-2 grid gap-8 bg-white md:rounded-xl md:p-8 dark:bg-zinc-900 dark:text-white"
+        className="max-w-xl w-full p-2 grid gap-2 bg-white md:rounded-xl md:p-8 dark:bg-zinc-900 dark:text-white"
         onSubmit={async (e) => {
           e.preventDefault();
           setLoading(true);
@@ -46,7 +46,7 @@ export default function Component() {
         }}
       >
         <header className="text-center flex items-center justify-center gap-2">
-          <h2 className="text-2xl font-semibold pointer-events-none">
+          <h2 className="text-2xl pointer-events-none">
             Log in |
           </h2>
           <Logo />
@@ -54,7 +54,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="">Email</label>
           <input
-            className="dark:text-black"
+            className="p-2 dark:text-black"
             type="email"
             placeholder="Enter your email"
             required
@@ -64,7 +64,7 @@ export default function Component() {
         <section className="grid h-max gap-4 p-4">
           <label className="">Password</label>
           <input
-            className="dark:text-black"
+            className="p-2 dark:text-black"
             type="password"
             placeholder="Enter your password"
             required
