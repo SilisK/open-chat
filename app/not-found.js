@@ -18,10 +18,10 @@ export default function NotFound() {
         <button
         className="px-8"
           onClick={() => {
-            router.back();
+            router.push("/");
           }}
         >
-          Go Back
+          Go Home
         </button>
       </header>
     </div>
